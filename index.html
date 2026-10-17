@@ -1,0 +1,102 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Create a shareable short link or a QR code with SmartURL.">
+    <meta name="theme-color" content="#f4f7f1">
+    <title>SmartURL | Link workspace</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" href="/" aria-label="SmartURL home">
+            <span class="brand-mark" aria-hidden="true">s</span>
+            <span class="brand-name">smart<span>url</span></span>
+        </a>
+        <div class="service-indicator"><span aria-hidden="true"></span> LINK WORKSPACE</div>
+    </header>
+
+    <main class="page-shell">
+        <section class="page-intro" aria-labelledby="page-title">
+            <div class="eyebrow"><span>SMARTURL / 01</span><span class="eyebrow-rule" aria-hidden="true"></span><span>LINK TOOLS</span></div>
+            <h1 id="page-title">Make sharing <em>simpler.</em></h1>
+            <p>Turn a long address into a neat link or a scannable code.</p>
+        </section>
+
+        <section class="tools-grid" aria-label="Link tools">
+            <article class="tool-panel shorten-panel" aria-labelledby="shorten-heading">
+                <div class="panel-topline">
+                    <span class="tool-number">01</span>
+                    <span class="panel-category">SHORT LINK</span>
+                </div>
+                <h2 id="shorten-heading">Shorten a link</h2>
+                <p class="panel-description">Create a compact URL that redirects to your original address.</p>
+
+                <form id="shorten-form">
+                    <label for="long-url">Destination URL</label>
+                    <input
+                        type="url"
+                        id="long-url"
+                        placeholder="https://example.com/page"
+                        autocomplete="url"
+                        required
+                    >
+                    <button type="submit" id="shorten-button" class="primary-button">
+                        <span>Create short link</span><span class="button-arrow" aria-hidden="true">&#8594;</span>
+                    </button>
+                </form>
+                <p class="feedback" id="shorten-status" role="status" aria-live="polite"></p>
+
+                <div id="short-url-result" class="output-panel" hidden>
+                    <p class="output-label">YOUR SHORT LINK</p>
+                    <div class="short-url-container">
+                        <input type="text" id="short-url" aria-label="Your shortened URL" readonly>
+                        <button type="button" id="copy-button" class="copy-button">Copy</button>
+                    </div>
+                    <button type="button" id="qr-from-short" class="text-button">Make a QR code for this link <span aria-hidden="true">&#8594;</span></button>
+                </div>
+            </article>
+
+            <article class="tool-panel qr-panel" aria-labelledby="qr-heading">
+                <div class="panel-topline">
+                    <span class="tool-number qr-number">02</span>
+                    <span class="panel-category">QR CODE</span>
+                </div>
+                <h2 id="qr-heading">Make it scannable</h2>
+                <p class="panel-description">Generate a downloadable code for any web address.</p>
+
+                <form id="qr-form">
+                    <label for="qr-url">Web address</label>
+                    <input
+                        type="url"
+                        id="qr-url"
+                        placeholder="https://example.com"
+                        autocomplete="url"
+                        required
+                    >
+                    <button type="submit" id="generate-qr-button" class="secondary-button">
+                        <span>Generate QR code</span><span class="button-arrow" aria-hidden="true">&#8594;</span>
+                    </button>
+                </form>
+                <p class="feedback" id="qr-status" role="status" aria-live="polite"></p>
+
+                <div id="qr-result" class="qr-output" hidden>
+                    <img id="qr-image" alt="QR code for the entered web address">
+                    <button type="button" id="download-qr" class="download-button">
+                        Download PNG <span aria-hidden="true">&#8595;</span>
+                    </button>
+                </div>
+            </article>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <span>SMARTURL</span>
+        <span>Built with Flask &amp; SQLite</span>
+    </footer>
+
+    <script src="/script.js"></script>
+</body>
+</html>
