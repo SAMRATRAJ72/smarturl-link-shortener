@@ -1,6 +1,7 @@
 
 from flask import Flask, request, jsonify, redirect, send_file, send_from_directory
 from io import BytesIO
+import os
 import sqlite3
 import secrets
 import string
@@ -9,7 +10,7 @@ import qrcode
 
 app = Flask(__name__)
 
-DATABASE = "smarturl.db"
+DATABASE = os.path.join(app.root_path, "smarturl.db")
 
 
 def get_db():
