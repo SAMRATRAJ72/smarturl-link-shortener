@@ -38,6 +38,64 @@ The `/api/shorten` endpoint stores the destination and returns a short URL. When
 
 Local short links only work while the local Flask server is running, and are reachable only from your computer. To share links publicly, deploy the Flask app to a public host and create the links using that public address. A production deployment also needs persistent storage for `smarturl.db`, or a hosted database, so links survive restarts. Do not use Flask's built-in development server for production traffic.
 
+## Deploy to PythonAnywhere
+
+These steps use the free PythonAnywhere web app address. The repository is public, so PythonAnywhere can clone it directly from GitHub.
+
+1. Sign in to [PythonAnywhere](https://www.pythonanywhere.com/) and open a **Bash console**.
+2. Clone the project and install its dependencies. Use a Python version available in PythonAnywhere; select the same version in the Web tab later.
+
+	```sh
+	git clone https://github.com/SAMRATRAJ72/smarturl-link-shortener.git
+	cd smarturl-link-shortener
+	mkvirtualenv --python=python3.13 smarturl
+	pip install -r requirements.txt
+	```
+
+	If Python 3.13 is unavailable, replace it with an available version, such as `python3.12`.
+
+3. Open the **Web** tab, choose **Add a new web app**, select **Manual configuration**, and choose the same Python version used for the virtual environment.
+4. In the **Virtualenv** field, enter the path below, replacing `YOUR-USERNAME` with the exact username shown in PythonAnywhere:
+
+	```text
+	/home/YOUR-USERNAME/.virtualenvs/smarturl
+	```
+
+5. From the Web tab, open the linked **WSGI configuration file**. Replace its contents with the following, again replacing `YOUR-USERNAME` with the exact PythonAnywhere username:
+
+	```python
+	import sys
+
+	path = "/home/YOUR-USERNAME/smarturl-link-shortener"
+	if path not in sys.path:
+		 sys.path.insert(0, path)
+
+	from app import app as application
+	```
+
+6. Save the WSGI file, return to the Web tab, and click **Reload**. Open the web address displayed on that page, usually `https://YOUR-USERNAME.pythonanywhere.com`.
+
+The app creates `smarturl.db` beside `app.py` when it starts. The database is excluded from Git, so the deployed app starts with no short links; create new links on the hosted site. Keep the database in your PythonAnywhere project directory so it remains in your account's persistent storage.
+
+### Updating the deployed app
+
+After changing code locally, push the change to GitHub:
+
+```powershell
+git add .
+git commit -m "Describe your change"
+git push
+```
+
+Then, in a PythonAnywhere Bash console, pull the update and reload the web app:
+
+```sh
+cd ~/smarturl-link-shortener
+git pull
+```
+
+Click **Reload** in the Web tab after `git pull` completes.
+
 ## Project files
 
 - `app.py` - Flask routes, short-link redirects, and QR generation
